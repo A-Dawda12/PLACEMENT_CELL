@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Interview</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #E6E9E9;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        form {
+            height: 60vh;
+            display: grid;
+            place-content: center;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+        h3 {
+            margin-bottom: 20px;
+            color: black;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <% include('_header') %>
+
+    <% if(success) { %>
+        <div class="alert alert-success" role="alert">
+            <%= success %>
+        </div>
+    <% } %>
+    <% if(error) { %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+    <% } %>
+
+    <div class="container">
+        <form class="w-60 mx-auto mt-4" action="/company/scheduleInterview" method="post">
+            <h3>Schedule Interview</h3>
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <select class="form-select" aria-label="Default select example" name="id" id="name">
+                    <option selected disabled>Select Student</option>
+                    <% for(let student of students) { %>
+                        <option value="<%= student.id %>"><%= student.name %></option>
+                    <% } %>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="company" class="form-label">Company</label>
+                <input type="text" class="form-control" id="company" name="company" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="date" class="form-control" id="date" name="date" required />
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" class="btn btn-success">Schedule Interview</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

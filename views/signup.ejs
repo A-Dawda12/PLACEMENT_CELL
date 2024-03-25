@@ -1,36 +1,58 @@
+<!-- signup.ejs -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Team Career Camp</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Sign Up</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <h1 class="mt-5 mb-4">Sign Up</h1>
-        <!-- Sign Up form -->
-        <form action="/signup" method="POST">
-            <div class="form-group">
-                <label for="userName">UserName:</label>
-                <input type="text" class="form-control" id="userName" name="userName" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Sign Up</button>
-        </form>
-        <p class="mt-3">Already have an account? <a href="/signin">Sign In</a></p>
-    </div>
-    <!-- Bootstrap JS (optional) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<body style="background-color: #e6e9e9">
+    <%- include('_header') %>
+    <div class="w-50 mx-auto mt-5" style="display: grid; place-content: center; width: 530px; background: white;
+    border-radius: 5px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.05);">
+      <div class="mx-auto mt-3 mb-4" style="width: 100px">
+        <h4>Sign Up</h4>
+      </div>
+      <% if (error && error.length > 0) { %>
+        <div class="alert alert-danger" role="alert">
+          <%= error %>
+        </div>
+      <% } %>
+      <% if (success && success.length > 0) { %>
+        <div class="alert alert-success" role="alert">
+          <%= success %>
+        </div>
+      <% } %>
+      <div class="mb3">
+        <form action="/users/create" method="post" >
+
+          <label for="userName" class="form-label">Name</label>
+          <input type="text" class="form-control" id="userName" name="userName" placeholder="John Doe" required/>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" placeholder="xyz@email.com" name="email" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password" required />
+        </div>
+
+        <div class="mb-4 mt-3" style="display: flex; justify-content: center">
+          <button type="submit" class="btn btn-success btn-block mb-4">Sign Up</button>
+        </div>
+      </form>
+      <div class="mx-auto mb-3 mt-3" style="width: 300px">
+        <a href="/users/signin" style="margin-left: 100px">Log in Instead</a>
+      </div>
+      </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

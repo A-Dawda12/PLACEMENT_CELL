@@ -25,11 +25,11 @@ exports.postSignup = async (req, res, next) => {
         const hashedPassword = await bcrypt.hash(password, 12);
         const newEmployee = new Employee({userName, email, password: hashedPassword });
         await newEmployee.save();
-        req.flash('success_msg', 'Employee registration successful. Please log in.');
+        req.flash('success', 'Employee registration successful. Please log in.');
         res.redirect('/users/signin');
     } catch (err) {
         console.error(err);
-        req.flash('error_msg', 'An error occurred during employee registration');
+        req.flash('error', 'An error occurred during employee registration');
         res.redirect('/users/signup');
     }
 };
@@ -38,7 +38,8 @@ exports.postSignup = async (req, res, next) => {
 exports.postSignin = passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/users/signin',
-    failureFlash: true
+    failureFlash: true,
+    successFlash: true
 });
 
 // Logout employee

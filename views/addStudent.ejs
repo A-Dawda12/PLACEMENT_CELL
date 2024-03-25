@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Student Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        /* Custom styles */
+        body {
+            background-color: #e6e9e9;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        form {
+            height: 100%;
+            display: grid;
+            place-content: center;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.05);
+            padding: 50px 70px;
+        }
+        h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-control {
+            margin-bottom: 15px;
+        }
+        button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <% include('_header') %>
+
+    <div class="container">
+        <% if (success) { %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+        <% } %>
+
+        <% if (error) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+
+        <form action="/students/addStudent" method="post" class="w-50 mx-auto mt-4">
+            <h3>Add Student</h3>
+            <fieldset>
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </fieldset>
+            <fieldset>
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" placeholder="abc@gmail.com" name="email">
+            </fieldset>
+            <fieldset>
+                <label for="contactNumber">Mobile Number</label>
+                <input type="text" class="form-control" id="contactNumber" name="contactNumber">
+            </fieldset>
+            <fieldset>
+                <label for="batch">Batch</label>
+                <input type="text" class="form-control" id="batch" name="batch">
+            </fieldset>
+            <fieldset>
+                <label for="college">College Name</label>
+                <input type="text" class="form-control" id="college" name="college">
+            </fieldset>
+            <fieldset>
+                <label for="placement">Placement Status</label>
+                <select class="form-select" aria-label="Default select example" id="placement" name="placement">
+                    <option value="Placed">Placed</option>
+                    <option value="Not Placed">Not Placed</option>
+                </select>
+            </fieldset>
+            <fieldset>
+                <div class="row">
+                    <div class="col">
+                        <label for="dsa">DSA</label>
+                        <input type="text" class="form-control" id="dsa" name="dsa">
+                    </div>
+                    <div class="col">
+                        <label for="webd">Web Development</label>
+                        <input type="text" class="form-control" id="webd" name="webd">
+                    </div>
+                    <div class="col">
+                        <label for="react">React</label>
+                        <input type="text" class="form-control" id="react" name="react">
+                    </div>
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-success">Create Student</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

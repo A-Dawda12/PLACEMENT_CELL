@@ -6,10 +6,10 @@ module.exports.interviewList = async function (req, res){
     try {
         //Get all the students list who have their interview scheduled
         const students = await Student.find({ 'interviews.0': { $exists: true } });
-        return res.render('interview', { students });
+        return res.render('interviews', { students });
     } catch (error) {
         req.flash('error', "Something went wrong!!");
-        return res.redirect(req.originalUrl);
+        return res.redirect('back');
     }
 }
 
@@ -115,7 +115,7 @@ module.exports.updateStatus = async function (req, res) {
         }
 
         req.flash('success','Interview Status Changed Successfully');
-        return res.redirect('back');
+        return res.redirect('company/home');
 
     } 
     catch (error) {

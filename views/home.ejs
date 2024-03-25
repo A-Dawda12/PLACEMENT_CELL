@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        /* Custom styles */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .btn-add-student {
+            margin-bottom: 20px;
+        }
+        .alert {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <% include('_header') %>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h2>List of Students:</h2>
+            </div>
+            <div class="col-6 text-right">
+                <a href="/students/create" class="btn btn-success btn-add-student">+ Add Student</a>
+            </div>
+        </div>
+
+        <!-- Flash messages -->
+        <% if(success) { %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+        <% } %>
+        <% if(error) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+
+        <!-- Student table -->
+        <% if(students.length > 0) { %>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Batch</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Contact</th>
+                            <th scope="col">DSA</th>
+                            <th scope="col">WEB</th>
+                            <th scope="col">REACT</th>
+                            <th scope="col">Interview</th>
+                            <th scope="col" class="text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        <% students.forEach((student) => { %>
+                            <tr>
+                                <td><%= student.batch %></td>
+                                <td><%= student.name %></td>
+                                <td><%= student.email %></td>
+                                <td><%= student.contactNumber %></td>
+                                <td><%= student.dsa %></td>
+                                <td><%= student.webd %></td>
+                                <td><%= student.react %></td>
+                                <td>
+                                    <% if(student.interviews.length) { %>
+                                        <% student.interviews.forEach((company) => { %>
+                                            <a href="#" class="company-name"><%= company.company %></a>
+                                        <% }) %>
+                                    <% } else { %>
+                                        NONE
+                                    <% } %>
+                                </td>
+                                <td class="text-right">
+                                    <a href="/students/delete/<%= student.id %>" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %>
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">No Records Found</h4>
+                <p>There are no student records available.</p>
+            </div>
+        <% } %>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
