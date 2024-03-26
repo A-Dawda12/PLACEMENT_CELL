@@ -6,7 +6,9 @@ module.exports.interviewList = async function (req, res){
     try {
         //Get all the students list who have their interview scheduled
         const students = await Student.find({ 'interviews.0': { $exists: true } });
-        return res.render('interviews', { students });
+        let errorMsg = req.flash('error', null);
+        let successMsg = req.flash('success', null);
+        return res.render('interviews', { students, error : errorMsg, success : successMsg });
     } catch (error) {
         req.flash('error', "Something went wrong!!");
         return res.redirect('back');
@@ -17,7 +19,9 @@ module.exports.interviewList = async function (req, res){
 module.exports.renderStudentList = async function (req, res){
     try {
         const students = await Student.find({});
-        return res.render("scheduleInterview", {students});
+        let errorMsg = req.flash('error', null);
+        let successMsg = req.flash('success', null);
+        return res.render("scheduleInterview", {students, error : errorMsg, success : successMsg});
     } catch (error) {
         req.flash('error', "Something went wrong!!");
         return res.redirect('back');
@@ -66,7 +70,7 @@ module.exports.scheduleInterview = async function (req, res) {
         student.save();
         }
         req.flash('success','Interview Scheduled Successfully');      
-        return res.redirect('company/home');
+        return res.redirect('home');
 
     } catch (error) {
       req.flash('Something went wrong!!');

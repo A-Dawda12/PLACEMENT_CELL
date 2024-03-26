@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const studentController = require('../controllers/studentController');
-const passport = require('passport');
+const authMiddleware = require('../middlewares/authMiddleware');
+//const passport = require('passport');
 
 //get form
-router.get('/addStudent', passport.checkAuthentication, studentController.addStudent);
+router.get('/addStudent', authMiddleware.checkAuthentication, studentController.addStudent);
 
 // Route to handle adding a new student
-router.post('/addSStudent', passport.checkAuthentication, studentController.addStudent);
+router.post('/addStudent', authMiddleware.checkAuthentication, studentController.addStudentPost);
 
 //delet student record
-router.delete('/delete/:id', passport.checkAuthentication, studentController.deletStudent)
+router.get('/delete/:id', authMiddleware.checkAuthentication, studentController.deletStudent);
 
 module.exports = router;

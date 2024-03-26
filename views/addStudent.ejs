@@ -39,15 +39,15 @@
 </head>
 <body>
     <!-- Header -->
-    <% include('_header') %>
+    <%- include('_header') %>
 
     <div class="container">
-        <% if (success) { %>
+       
+        <% if(success) { %>
             <div class="alert alert-success" role="alert">
                 <%= success %>
             </div>
         <% } %>
-
         <% if (error) { %>
             <div class="alert alert-danger" role="alert">
                 <%= error %>
@@ -107,5 +107,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/flashMsg.js"></script>
 </body>
 </html>

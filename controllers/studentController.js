@@ -4,12 +4,14 @@ const Student = require('../models/Student');
 
 //render add student page
 module.exports.addStudent = async function (req, res, next) {
-    return res.render('addStudent');
+    let errorMsg = req.flash('error', null);
+    let successMsg = req.flash('success', null);
+    return res.render('addStudent', {error : errorMsg, success : successMsg});
 }
 
 //add Student
 
-module.exports.addStudent = async function(req, res, next) {
+module.exports.addStudentPost = async function(req, res, next) {
     const {name, email, contactNumber, college, batch, placement, dsa, webd, react} = req.body;
     try {
         const student = await Student.findOne({email});
@@ -24,6 +26,7 @@ module.exports.addStudent = async function(req, res, next) {
         })
         await newStudent.save();
 
+        req.flash('success', "student added successfully");
         return res.redirect('/')
     } catch (error) {
         req.flash('error', "Something went wrong!!");

@@ -1,5 +1,6 @@
 const passport = require('passport');
-const Employee = require('../models/Employee');
+const LocalStrategy = require('passport-local').Strategy;
+const User = require('../models/User');
 const Student = require('../models/Student');
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
@@ -9,12 +10,22 @@ const writeFileAsync = promisify(fs.writeFile);
 
 // Render the signup form
 exports.getSignup = (req, res) => {
-    res.render('signup'); 
+    if (req.isAuthenticated()) {
+		return res.redirect('back');
+	}
+    let successMessage = req.flash('success', null);
+    let errorMessage = req.flash('error', null);
+    res.render('signup', { success: successMessage, error: errorMessage }); 
 };
 
 // Render the signin form
 exports.getSignin = (req, res) => {
-    res.render('signin'); 
+    if (req.isAuthenticated()) {
+		return res.redirect('back');
+	}
+    let successMessage = req.flash('success', null);
+    let errorMessage = req.flash('error', null);
+    res.render('signin', { success: successMessage, error: errorMessage }); 
 };
 
 
@@ -23,8 +34,8 @@ exports.postSignup = async (req, res, next) => {
     try {
         const { userName, email, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 12);
-        const newEmployee = new Employee({userName, email, password: hashedPassword });
-        await newEmployee.save();
+        const newUser = new User({userName, email, password: hashedPassword });
+        await newUser.save();
         req.flash('success', 'Employee registration successful. Please log in.');
         res.redirect('/users/signin');
     } catch (err) {
@@ -39,14 +50,18 @@ exports.postSignin = passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/users/signin',
     failureFlash: true,
-    successFlash: true
 });
 
 // Logout employee
-exports.logout = (req, res) => {
-    req.logout();
-    req.flash('success_msg', 'You have been logged out');
-    res.redirect('users/signin');
+exports.logout = (req, res, next) => {
+    req.logout(function (err) {
+		if (err) {
+			req.flash('error', 'An error occurred during signout');
+            return res.redirect('back');
+		}
+	});
+    req.flash('success', 'You have been logged out');
+    return res.redirect('users/signin');
 };
 
 

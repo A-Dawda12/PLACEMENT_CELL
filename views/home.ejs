@@ -29,30 +29,21 @@
 </head>
 <body>
     <!-- Header -->
-    <% include('_header') %>
+    <%- include('_header.ejs') %>
 
     <div class="container">
+        
         <div class="row">
             <div class="col-6">
                 <h2>List of Students:</h2>
             </div>
             <div class="col-6 text-right">
-                <a href="/students/create" class="btn btn-success btn-add-student">+ Add Student</a>
+                <a href="/students/addStudent" class="btn btn-success btn-add-student">+ Add Student</a>
             </div>
         </div>
 
         <!-- Flash messages -->
-        <% if(success) { %>
-            <div class="alert alert-success" role="alert">
-                <%= success %>
-            </div>
-        <% } %>
-        <% if(error) { %>
-            <div class="alert alert-danger" role="alert">
-                <%= error %>
-            </div>
-        <% } %>
-
+    
         <!-- Student table -->
         <% if(students.length > 0) { %>
             <div class="table-responsive">

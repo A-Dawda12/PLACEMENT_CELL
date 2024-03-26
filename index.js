@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const passport = require('passport');
+const passport = require('passport'); 
+require('./config/passport')(passport);
+const flash = require('connect-flash');
 const path = require('path');
 
 // Load environment variables from .env file if using dotenv
@@ -13,6 +15,13 @@ const connectDB = require('./config/database');
 // Initialize Express app
 const app = express();
 
+// set ejs as view engine
+app.set('view engine', 'ejs');
+app.set('views', './views');
+
+//flash msg
+app.use(flash());
+
 // Connect to MongoDB database
 connectDB();
 
@@ -20,26 +29,20 @@ connectDB();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 1000 * 60 * 100 }
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
 
 // Set up routes
-app.use('/', require('./routes'));
-
-// const interviewRoutes = require('./routes/interviewRoutes');
-// const studentRoutes = require('./routes/studentRoutes');
-// const jobRoutes = require('./routes/jobRoutes'); // If implementing bonus feature
-// app.use('/api/auth', authRoutes);
-// // app.use('/api/interviews', interviewRoutes);
-// // app.use('/api/students', studentRoutes);
-// // app.use('/api/jobs', jobRoutes); // If implementing bonus feature
+app.use('/', require('./routes/indexRoutes'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {

@@ -1,20 +1,21 @@
 const express = require('express');
-const passport = require('passport');
+//const passport = require('passport');
 const interviewController = require('../controllers/interviewController');
+const authMiddleware = require('../middlewares/authMiddleware');
 const router = express.Router();
 
 //interview list page
-router.get('home', passport.checkAuthentication, interviewController.interviewList);
+router.get('/home', authMiddleware.checkAuthentication, interviewController.interviewList);
 
 //get student list for allocation
-router.get('allocateStudent', passport.checkAuthentication, interviewController.renderStudentList);
+router.get('/allocateStudent', authMiddleware.checkAuthentication, interviewController.renderStudentList);
 
 
 //submit form post
 
-router.post('/scheduleInterview', passport.checkAuthentication, interviewController.scheduleInterview);
+router.post('/scheduleInterview', authMiddleware.checkAuthentication, interviewController.scheduleInterview);
 
-router.post('/updateStatus/:id', passport.checkAuthentication, interviewController.updateStatus);
+router.post('/updateStatus/:id', authMiddleware.checkAuthentication, interviewController.updateStatus);
 
 
 module.exports = router;

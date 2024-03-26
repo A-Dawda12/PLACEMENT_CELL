@@ -6,10 +6,10 @@ const userRoutes = require('./authRoutes');
 const studentRoutes = require('./studentRoutes');
 const homeController = require('../controllers/homeController');
 const interviewRoutes = require('./interviewRoutes');
-const passport = require('passport');
+const authMiddleware = require('../middlewares/authMiddleware');
 
 // Route for the home page
-router.get('/', passport.checkAuthentication, homeController.homePage); 
+router.get('/', authMiddleware.checkAuthentication, homeController.homePage); 
 
 // Mount routes for user-related operations
 router.use('/users', userRoutes);
