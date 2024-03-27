@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (successMsg && successMsg.textContent.trim() !== '') {
         setTimeout(function () {
             successMsg.style.display = 'none';
-        }, 2000);
+        }, 1500);
     }
     else{
         successMsg.style.display = 'none';
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (errorMsg && errorMsg.textContent.trim() !== '') {
         setTimeout(function () {
             errorMsg.style.display = 'none';
-        }, 2000);
+        }, 1500);
     }
     else{
         errorMsg.style.display = 'none';

@@ -61,7 +61,7 @@ exports.logout = (req, res, next) => {
 		}
 	});
     req.flash('success', 'You have been logged out');
-    return res.redirect('users/signin');
+    return res.redirect('signin');
 };
 
 
@@ -70,27 +70,31 @@ module.exports.downloadCsv = async function (req, res) {
     try {
         const students = await Student.find({});
         let csvData = 'S.No, Name, Email, Contact Number, College, Batch, Placement, DSA Score, WebDev Score, React Score, Interview, Date, Result\n';
-        let no = 1;
+
+        // Initialize serial number
+        let serialNo = 1;
 
         // Loop through each student to generate CSV data
         for (const student of students) {
             // Construct the CSV row for the current student
-            let rowData = `${no},${student.name},${student.email},${student.contactNumber},${student.batch},${student.college},${student.placement},${student.dsa},${student.webd},${student.react}`;
+            let rowData = `${student.name},${student.email},${student.contactNumber},${student.college},${student.batch},${student.placement},${student.dsa},${student.webd},${student.react}`;
 
             // Add interview details if available for the student
             if (student.interviews.length > 0) {
                 for (const interview of student.interviews) {
-                    rowData += `,${interview.company},${interview.date.toString()},${interview.result}`;
+                    // Append the current row to the CSV data with incremented serial number
+                    csvData += `${serialNo},${rowData},${interview.company},${interview.date ? interview.date.toString() : ''},${interview.result}\n`;
+                    serialNo++;
                 }
+            } else {
+                // If no interview, just add student details with serial number
+                csvData += `${serialNo},${rowData},,,,,\n`;
+                serialNo++;
             }
-
-            // Append the current row to the CSV data
-            csvData += `${rowData}\n`;
-            no++;
         }
 
         // Define the file path for the CSV file
-        const csvFilePath = path.join(__dirname, '..', 'report', 'data.csv');
+        const csvFilePath = path.join(__dirname, '..', 'report', 'Report.csv');
 
         // Write the CSV data to the file
         await writeFileAsync(csvFilePath, csvData);
